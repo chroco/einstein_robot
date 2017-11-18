@@ -47,7 +47,7 @@ void setup(){
 
 void loop(){
 
-//  test();
+  test();
 
 //      Arm movements functions
 
@@ -78,7 +78,7 @@ void loop(){
 //  motionNo();
 //  NeckTilt();
 
-  }
+}
 
 void test(){
 
