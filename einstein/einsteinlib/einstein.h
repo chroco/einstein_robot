@@ -6,17 +6,17 @@
 
 // Digital Pins
 
-#define PIN_EYES_HORIZONTAL		0
-#define PIN_EYES_VERTICAL			1
-#define PIN_EYEBROW_RIGHT			2
-#define PIN_EYEBROW_LEFT			3
-#define PIN_JAW_RIGHT					4	
-#define PIN_JAW_LEFT					5
-#define PIN_HEAD_TURN					6
-#define PIN_HEAD_TILT					7
-#define PIN_ARM_SHOULDER			8
-#define PIN_ARM_ROTATE				9
-#define PIN_ARM_ELBOW					10
+#define PIN_EYES_HORIZONTAL			0
+#define PIN_EYES_VERTICAL				1
+#define PIN_BROW_RIGHT					2
+#define PIN_BROW_LEFT						3
+#define PIN_JAW_RIGHT						4	
+#define PIN_JAW_LEFT						5
+#define PIN_HEAD_TURN						6
+#define PIN_HEAD_TILT						7
+#define PIN_ARM_RIGHT_SHOULDER	8
+#define PIN_ARM_RIGHT_ROTATE		9
+#define PIN_ARM_RIGHT_ELBOW			10
 
 // Analog Pins
 
@@ -74,9 +74,9 @@ class Mouth{
 		Servo m_LeftJaw;
 };
 
-class Eyebrows{
+class Brow{
 	public:
-		Eyebrows(int pin_left, int pin_right);
+		Brow(int pin_left, int pin_right);
 		void move(int left, int right);
 	private:
 		Servo m_RightBrow;
@@ -123,18 +123,18 @@ class Einstein{
 		void smile();
 		void frown();
 		void speak(int duration);
-		void raiseEyebrows();
-		void lowerEyebrows();
-		void neutralEyebrows();
+		void raiseBrow();
+		void lowerBrow();
+		void neutralBrow();
 		void turnHead(int pos);
 		void tiltHead(int pos);
 		void blink(int duration);
 	private:
-		Head *m_pHead;
-		Eyes *m_pEyes;
+		Arm *m_pLeftArm;
 		Mouth *m_pMouth;
-		Eyebrows *m_pEyebrows;
-		Arm *m_pArm;
+		Brow *m_pBrow;
+		Eyes *m_pEyes;
+		Head *m_pHead;
 
 };
 

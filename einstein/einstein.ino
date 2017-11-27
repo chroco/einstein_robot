@@ -3,16 +3,38 @@
 
 Einstein *einstein;
 
+void testHead(Einstein *);
+void testEyes(Einstein *);
+void testEyesbrows(Einstein *);
+void testMouth(Einstein *);
+
 void setup(){
 	einstein = new Einstein();
 }
 
 void loop(){
-	delay(2000);
-	einstein->turnHead(45);
-	einstein->tiltHead(45);
-	delay(2000);
-	einstein->turnHead(135);
-	einstein->tiltHead(135);
-	einstein->blink(500);
+	testHead(einstein);
+	testEyes(einstein);
 }
+
+void testHead(Einstein *e){
+	delay(2000);
+	e->turnHead(45);
+	e->tiltHead(45);
+	delay(2000);
+	e->turnHead(135);
+	e->tiltHead(135);
+}
+
+void testEyes(Einstein *e){
+	e->blink(500);
+}
+
+void testEyesbrows(Einstein *e){
+
+}
+
+void testMouth(Einstein *e){
+
+}
+

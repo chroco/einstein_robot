@@ -4,19 +4,19 @@ bool validPosition(int pos){
 	return (pos >= SERVO_MIN && pos <= SERVO_MAX);
 }
 
-void moveServo(Servo *servo,int pos, int ms_delay){
-	int i,current_pos = servo->read();
-	if (!validPosition(pos) || current_pos == pos){
+void moveServo(Servo *servo,int pos, int delay_ms){
+	int temp_pos = servo->read();
+	if (!validPosition(pos) || temp_pos == pos){
 		return;
-	}else if(current_pos < pos){
-		for(;current_pos <= pos;++current_pos){
-			servo->write(current_pos);
-			delay(ms_delay);
+	}else if(temp_pos < pos){
+		for(;temp_pos <= pos;++temp_pos){
+			servo->write(temp_pos);
+			delay(delay_ms);
 		}
 	}else{
-		for(;current_pos >= pos;--current_pos){
-			servo->write(current_pos);
-			delay(ms_delay);
+		for(;temp_pos >= pos;--temp_pos){
+			servo->write(temp_pos);
+			delay(delay_ms);
 		}
 	}
 }
@@ -74,16 +74,16 @@ void Mouth::move(int pos_left, int pos_right){
 	//m_LeftJaw.write(right);
 }
 
-// Eyebrows
+// Brow
 
-Eyebrows::Eyebrows(int pin_left, int pin_right){
+Brow::Brow(int pin_left, int pin_right){
 	m_RightBrow.attach(pin_right);
 	m_LeftBrow.attach(pin_left);
 	moveServo(&m_RightBrow,SERVO_CENTER,BROW_DELAY);
 	moveServo(&m_LeftBrow,SERVO_CENTER,BROW_DELAY);
 }
 
-void Eyebrows::move(int pos_left, int pos_right){
+void Brow::move(int pos_left, int pos_right){
 	moveServo(&m_RightBrow,pos_right,BROW_DELAY);
 	moveServo(&m_LeftBrow,pos_left,BROW_DELAY);
 //	m_RightBrow.write(pos_right);
@@ -163,6 +163,13 @@ void Head::tilt(int pos){
 // Einstein 
 
 Einstein::Einstein(){
+	m_pLeftArm = new Arm(
+		PIN_ARM_RIGHT_SHOULDER,
+		PIN_ARM_RIGHT_ROTATE,
+		PIN_ARM_RIGHT_ELBOW
+	);
+	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
+	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
 	m_pHead = new Head(PIN_HEAD_TURN,PIN_HEAD_TILT);
 	m_pEyes = new Eyes(
 		PIN_EYES_HORIZONTAL,
@@ -177,9 +184,9 @@ void Einstein::moveRightArm(
 	int pos_rotate,
 	int pos_elbow
 ){
-	m_pArm->vertPosition(pos_shoulder);
-	m_pArm->rotate(pos_rotate);
-	m_pArm->bend(pos_elbow);
+	m_pLeftArm->vertPosition(pos_shoulder);
+	m_pLeftArm->rotate(pos_rotate);
+	m_pLeftArm->bend(pos_elbow);
 }
 
 void Einstein::smile(){
@@ -194,16 +201,16 @@ void Einstein::speak(int duration){
 	// TODO: implement me
 }
 
-void Einstein::raiseEyebrows(){
-	m_pEyebrows->move(SERVO_CENTER,SERVO_CENTER);
+void Einstein::raiseBrow(){
+	m_pBrow->move(SERVO_CENTER,SERVO_CENTER);
 }
 
-void Einstein::lowerEyebrows(){
-	m_pEyebrows->move(SERVO_CENTER,SERVO_CENTER);
+void Einstein::lowerBrow(){
+	m_pBrow->move(SERVO_CENTER,SERVO_CENTER);
 }
 
-void Einstein::neutralEyebrows(){
-	m_pEyebrows->move(SERVO_CENTER,SERVO_CENTER);
+void Einstein::neutralBrow(){
+	m_pBrow->move(SERVO_CENTER,SERVO_CENTER);
 }
 
 void Einstein::turnHead(int pos){
