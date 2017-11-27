@@ -17,17 +17,27 @@
 #define PIN_ARM_RIGHT_SHOULDER	8
 #define PIN_ARM_RIGHT_ROTATE		9
 #define PIN_ARM_RIGHT_ELBOW			10
+#define PIN_MOTOR_ENABLE_RIGHT	11
+#define PIN_MOTOR_ENABLE_LEFT		12 
 
 // Analog Pins
 
-#define PIN_EYE_RIGHT A0
-#define PIN_EYE_LEFT  A1
+#define PIN_EYE_RIGHT 					A0
+#define PIN_EYE_LEFT  					A1
+#define PIN_MOTOR_FRONT_RIGHT		A2
+#define PIN_MOTOR_REAR_RIGHT		A3 
+#define PIN_MOTOR_FRONT_LEFT		A2
+#define PIN_MOTOR_REAR_LEFT			A3 
 
 // Servos
 
 #define SERVO_MIN 		0
 #define SERVO_CENTER 	90
 #define SERVO_MAX 		180
+
+// DC Motor
+
+#define MOTOR_SPEED 	200
 
 // Misc defines
 
@@ -43,6 +53,31 @@
 
 #define OFF 0
 #define ON  1
+
+class DCMotor{
+	public:
+		DCMotor(int enable,int front,int rear);
+		void forward();
+		void reverse();
+		void stop();
+	private:
+		int m_Enable;
+		int m_Front;
+		int m_Rear;
+};
+
+class Joyride{
+	public:
+		Joyride();
+		void forward();
+		void reverse();
+		void stop();
+		void turnRight(int value);
+		void turnLeft(int value);
+	private:
+		DCMotor *m_pRightMotor;
+		DCMotor *m_pLeftMotor;
+};
 
 class Arm{
 	public:
