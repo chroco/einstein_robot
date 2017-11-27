@@ -7,7 +7,6 @@ void setup(){
 	einstein = new Einstein();
 }
 
-
 void loop(){
 	delay(2000);
 	einstein->turnHead(45);
