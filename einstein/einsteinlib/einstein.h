@@ -22,54 +22,61 @@
 #define SERVO_CENTER 	90
 #define SERVO_MAX 		180
 
-// Initialization 
-
-#define INIT_TURN 		SERVO_CENTER
-#define INIT_TILT 		SERVO_CENTER
-
 // Misc defines
 
 #define OFF 0
 #define ON  1
 
+class Mouth{
+	public:
+
+	private:
+};
+
+class Eyebrows{
+	public:
+
+	private:
+};
+
 class Eyes{
-public:
-	Eyes(
-		int pin_EyeServo_Hor,
-		int pin_EyeServo_Ver,
-		int pin_LeftEyeLED, 
-		int pin_RightEyeLED
-	);
-	void blink(int duration);
-	void bothEyes(int state);
-	void leftEye(int state);
-	void rightEye(int state);
-private:
-	Servo m_EyeServo_Hor;
-	Servo m_EyeServo_Ver;
-	int m_Pin_LeftEyeLED;
-	int m_Pin_RightEyeLED;
+	public:
+		Eyes(
+			int pin_EyeServo_Hor,
+			int pin_EyeServo_Ver,
+			int pin_LeftEyeLED, 
+			int pin_RightEyeLED
+		);
+		void blink(int duration);
+		void bothEyes(int state);
+		void leftEye(int state);
+		void rightEye(int state);
+	private:
+		Servo m_EyeServo_Hor;
+		Servo m_EyeServo_Ver;
+		int m_Pin_LeftEyeLED;
+		int m_Pin_RightEyeLED;
 };
 
 class Head{
-public:
-	Head(int pin_turn,int pin_tilt);
-	void turn(int pos);
-	void tilt(int pos);
-private:
-	Servo m_Turn;
-	Servo m_Tilt;
+	public:
+		Head(int pin_turn,int pin_tilt);
+		void turn(int pos);
+		void tilt(int pos);
+	private:
+		Servo m_Turn;
+		Servo m_Tilt;
 };
 
 class Einstein{
-public:
-	Einstein();
-	void turnHead(int pos);
-	void tiltHead(int pos);
-	void blink(int duration);
-private:
-	Head *m_pHead;
-	Eyes *m_pEyes;
+	public:
+		Einstein();
+		void turnHead(int pos);
+		void tiltHead(int pos);
+		void blink(int duration);
+	private:
+		Head *m_pHead;
+		Eyes *m_pEyes;
 };
 
 #endif
