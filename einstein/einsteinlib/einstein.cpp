@@ -31,24 +31,32 @@ Arm::Arm(
 	m_Shoulder.attach(pin_shoulder);
 	m_Rotate.attach(pin_rotate);
 	m_Elbow.attach(pin_elbow);
-	vertPosition(SERVO_CENTER);
-	rotate(SERVO_CENTER);
-	bend(SERVO_CENTER);
+	move(SERVO_CENTER,SERVO_CENTER,SERVO_CENTER);
 }
 
 void Arm::vertPosition(int pos){
-	moveServo(&m_Shoulder,pos,DEFAULT_DELAY);
+	moveServo(&m_Shoulder,pos,SHOULDER_DELAY);
 	//	m_Shoulder.write(pos);
 }
 
 void Arm::rotate(int pos){
-	moveServo(&m_Rotate,pos,DEFAULT_DELAY);
+	moveServo(&m_Rotate,pos,ROTATE_DELAY);
 		//m_Rotate.write(pos);
 }
 
 void Arm::bend(int pos){
-	moveServo(&m_Elbow,pos,DEFAULT_DELAY);
+	moveServo(&m_Elbow,pos,BEND_DELAY);
 		//m_Elbow.write(pos);
+}
+
+void Arm::move(
+	int pos_shoulder,
+	int pos_rotate,
+	int pos_elbow
+){
+	vertPosition(pos_shoulder);
+	rotate(pos_rotate);
+	bend(pos_elbow);
 }
 
 // Mouth
@@ -60,8 +68,8 @@ Mouth::Mouth(int pin_left, int pin_right){
 }
 
 void Mouth::move(int pos_left, int pos_right){
-	moveServo(&m_RightJaw,pos_right,DEFAULT_DELAY);
-	moveServo(&m_LeftJaw,pos_left,DEFAULT_DELAY);
+	moveServo(&m_RightJaw,pos_right,MOUTH_DELAY);
+	moveServo(&m_LeftJaw,pos_left,MOUTH_DELAY);
 	//m_RightJaw.write(left);
 	//m_LeftJaw.write(right);
 }
@@ -71,13 +79,13 @@ void Mouth::move(int pos_left, int pos_right){
 Eyebrows::Eyebrows(int pin_left, int pin_right){
 	m_RightBrow.attach(pin_right);
 	m_LeftBrow.attach(pin_left);
-	moveServo(&m_RightBrow,SERVO_CENTER,DEFAULT_DELAY);
-	moveServo(&m_LeftBrow,SERVO_CENTER,DEFAULT_DELAY);
+	moveServo(&m_RightBrow,SERVO_CENTER,BROW_DELAY);
+	moveServo(&m_LeftBrow,SERVO_CENTER,BROW_DELAY);
 }
 
 void Eyebrows::move(int pos_left, int pos_right){
-	moveServo(&m_RightBrow,pos_right,DEFAULT_DELAY);
-	moveServo(&m_LeftBrow,pos_left,DEFAULT_DELAY);
+	moveServo(&m_RightBrow,pos_right,BROW_DELAY);
+	moveServo(&m_LeftBrow,pos_left,BROW_DELAY);
 //	m_RightBrow.write(pos_right);
 //	m_LeftBrow.write(pos_left);
 }
@@ -122,6 +130,17 @@ void Eyes::rightEye(int state){
   digitalWrite(m_Pin_RightEyeLED,state);
 }
 
+void Eyes::move(int pos_horizontal, int pos_vertical){
+	moveServo(
+		&m_EyeServo_Horizontal,
+		pos_horizontal,EYE_DELAY
+	);
+	moveServo(
+		&m_EyeServo_Vertical,
+		pos_vertical,EYE_DELAY
+	);
+}
+
 // Head
 
 Head::Head(int pin_turn, int pin_tilt){
@@ -132,12 +151,12 @@ Head::Head(int pin_turn, int pin_tilt){
 }
 
 void Head::turn(int pos){
-	moveServo(&m_Turn,pos,DEFAULT_DELAY);
+	moveServo(&m_Turn,pos,TURN_DELAY);
 	//m_Turn.write(pos);
 }
 
 void Head::tilt(int pos){
-	moveServo(&m_Tilt,pos,DEFAULT_DELAY);
+	moveServo(&m_Tilt,pos,TILT_DELAY);
 	//	m_Tilt.write(pos);
 }
 

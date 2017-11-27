@@ -31,7 +31,15 @@
 
 // Misc defines
 
-#define DEFAULT_DELAY 50
+#define DEFAULT_DELAY 	50
+#define MOUTH_DELAY 		0
+#define TURN_DELAY 			DEFAULT_DELAY
+#define TILT_DELAY 			DEFAULT_DELAY
+#define BROW_DELAY 			0
+#define SHOULDER_DELAY 	DEFAULT_DELAY
+#define ROTATE_DELAY 		DEFAULT_DELAY
+#define BEND_DELAY 			DEFAULT_DELAY
+#define EYE_DELAY 			0
 
 #define OFF 0
 #define ON  1
@@ -46,6 +54,11 @@ class Arm{
 		void vertPosition(int pos);
 		void rotate(int pos);
 		void bend(int pos);
+		void move(
+			int pos_shoulder,
+			int pos_rotate,
+			int pos_elblow
+		);
 	private:
 		Servo m_Shoulder;
 		Servo m_Rotate;
@@ -81,6 +94,7 @@ class Eyes{
 		void bothEyes(int state);
 		void leftEye(int state);
 		void rightEye(int state);
+		void move(int pos_horizontal, int pos_vertical);
 	private:
 		Servo m_EyeServo_Horizontal;
 		Servo m_EyeServo_Vertical;
