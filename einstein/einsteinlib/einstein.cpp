@@ -31,13 +31,13 @@ DCMotor::DCMotor(int enable,int front,int rear)
 }
 
 void DCMotor::forward(){
-	digitalWrite(m_Front,HIGH);
-	digitalWrite(m_Rear,LOW);
+	digitalWrite(m_Front,LOW);
+	digitalWrite(m_Rear,HIGH);
 }
 
 void DCMotor::reverse(){
-	digitalWrite(m_Front,LOW);
-	digitalWrite(m_Rear,HIGH);
+	digitalWrite(m_Front,HIGH);
+	digitalWrite(m_Rear,LOW);
 }
 
 void DCMotor::stop(){
@@ -94,7 +94,7 @@ Arm::Arm(
 	move(SERVO_CENTER,SERVO_CENTER,SERVO_CENTER);
 }
 
-void Arm::vertPosition(int pos){
+void Arm::levelArm(int pos){
 	moveServo(&m_Shoulder,pos,SHOULDER_DELAY);
 	//	m_Shoulder.write(pos);
 }
@@ -114,7 +114,7 @@ void Arm::move(
 	int pos_rotate,
 	int pos_elbow
 ){
-	vertPosition(pos_shoulder);
+	levelArm(pos_shoulder);
 	rotate(pos_rotate);
 	bend(pos_elbow);
 }
@@ -242,6 +242,7 @@ Einstein::Einstein(){
 		PIN_EYE_RIGHT
 	);
 //*/
+//	m_pJoyride = new Joyride();
 }
 
 void Einstein::moveRightArm(
@@ -249,9 +250,21 @@ void Einstein::moveRightArm(
 	int pos_rotate,
 	int pos_elbow
 ){
-	m_pRightArm->vertPosition(pos_shoulder);
+	m_pRightArm->levelArm(pos_shoulder);
 	m_pRightArm->rotate(pos_rotate);
 	m_pRightArm->bend(pos_elbow);
+}
+
+void Einstein::rotateArm(int pos){
+	m_pRightArm->rotate(pos);
+}
+
+void Einstein::bendArm(int pos){
+	m_pRightArm->bend(pos);
+}
+
+void Einstein::levelArm(int pos){
+	m_pRightArm->levelArm(pos);
 }
 
 void Einstein::smile(){
@@ -292,4 +305,14 @@ void Einstein::blink(int duration){
 	m_pEyes->bothEyes(ON);
 }
 
+void Einstein::forward(){
+	m_pJoyride->forward();
+}
 
+void Einstein::reverse(){
+	m_pJoyride->reverse();
+}
+
+void Einstein::stop(){
+	m_pJoyride->stop();
+}

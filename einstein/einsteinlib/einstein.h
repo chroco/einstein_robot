@@ -17,17 +17,17 @@
 #define PIN_ARM_RIGHT_SHOULDER	8
 #define PIN_ARM_RIGHT_ROTATE		9
 #define PIN_ARM_RIGHT_ELBOW			10
-#define PIN_MOTOR_ENABLE_RIGHT	11
-#define PIN_MOTOR_ENABLE_LEFT		12 
+#define PIN_MOTOR_FRONT_RIGHT		11
+#define PIN_MOTOR_REAR_RIGHT		12 
+#define PIN_MOTOR_FRONT_LEFT		13
 
 // Analog Pins
 
 #define PIN_EYE_RIGHT 					A0
 #define PIN_EYE_LEFT  					A1
-#define PIN_MOTOR_FRONT_RIGHT		A2
-#define PIN_MOTOR_REAR_RIGHT		A3 
-#define PIN_MOTOR_FRONT_LEFT		A2
-#define PIN_MOTOR_REAR_LEFT			A3 
+#define PIN_MOTOR_ENABLE_RIGHT	A2
+#define PIN_MOTOR_ENABLE_LEFT		A3 
+#define PIN_MOTOR_REAR_LEFT			A4 
 
 // Servos
 
@@ -86,7 +86,7 @@ class Arm{
 			int pin_rotate,
 			int pin_elbow
 		);
-		void vertPosition(int pos);
+		void levelArm(int pos);
 		void rotate(int pos);
 		void bend(int pos);
 		void move(
@@ -150,11 +150,6 @@ class Head{
 class Einstein{
 	public:
 		Einstein();
-		void moveRightArm(
-			int pos_shoulder,
-			int pos_rotate,
-			int pos_elbow
-		);
 		void smile();
 		void frown();
 		void speak(int duration);
@@ -164,12 +159,24 @@ class Einstein{
 		void turnHead(int pos);
 		void tiltHead(int pos);
 		void blink(int duration);
+		void forward();
+		void reverse();
+		void stop();
+		void moveRightArm(
+			int pos_shoulder,
+			int pos_rotate,
+			int pos_elbow
+		);	
+		void rotateArm(int pos);
+		void bendArm(int pos);
+		void levelArm(int pos);
 	private:
 		Arm *m_pRightArm;
 		Mouth *m_pMouth;
 		Brow *m_pBrow;
 		Eyes *m_pEyes;
 		Head *m_pHead;
+		Joyride *m_pJoyride;
 
 };
 
