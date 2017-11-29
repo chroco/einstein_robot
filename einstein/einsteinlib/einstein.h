@@ -41,7 +41,7 @@
 
 // Misc defines
 
-#define DEFAULT_DELAY 	50
+#define DEFAULT_DELAY 	10
 #define MOUTH_DELAY 		0
 #define TURN_DELAY 			DEFAULT_DELAY
 #define TILT_DELAY 			DEFAULT_DELAY
@@ -165,7 +165,7 @@ class Einstein{
 		void tiltHead(int pos);
 		void blink(int duration);
 	private:
-		Arm *m_pLeftArm;
+		Arm *m_pRightArm;
 		Mouth *m_pMouth;
 		Brow *m_pBrow;
 		Eyes *m_pEyes;
