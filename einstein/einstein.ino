@@ -12,18 +12,19 @@ void testJoyride(Einstein *);
 
 void setup(){
 	einstein = new Einstein();
-	einstein->rotateArm(135);
+//	einstein->rotateRightArm(135);
 //	delay(3000);
 //	testBrows(einstein);
 }
 
 void loop(){
 //	testHead(einstein);
-//	testEyes(einstein);
+	testEyes(einstein);
 //	testBrows(einstein);
 //	testMouth(einstein);
 //	testJoyride(einstein);
-	testArm(einstein);
+//	testArm(einstein);
+	delay(500);
 }
 
 void testHead(Einstein *e){
@@ -56,11 +57,11 @@ void testMouth(Einstein *e){
 void testArm(Einstein *e){
 //	e->bendArm(135);
 //	e->rotateArm(135);
-	e->levelArm(0);
+	e->pitchRightArm(0);
 	delay(2000);
 //	e->bendArm(45);
 //	e->rotateArm(135);
-	e->levelArm(180);
+	e->pitchRightArm(180);
 	delay(2000);
 }
 
