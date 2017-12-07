@@ -8,9 +8,9 @@ Arm::Arm(
 	int pin_elbow
 ){
 	
-	m_Shoulder.attach(pin_shoulder);
-	m_Rotate.attach(pin_rotate);
-	m_Elbow.attach(pin_elbow);
+	m_pShoulder->attach(pin_shoulder);
+	m_pRotate->attach(pin_rotate);
+	m_pElbow->attach(pin_elbow);
 	m_pShoulder = new ServoControl(SHOULDER_MIN,SHOULDER_MAX);
 	m_pRotate = new ServoControl(ROTATE_MIN,ROTATE_MAX);
 	m_pElbow = new ServoControl(ELBOW_MIN,ELBOW_MAX);

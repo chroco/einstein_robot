@@ -11,10 +11,12 @@ Eyes::Eyes(
 	m_Pin_LeftEyeLED(pin_LeftEyeLED),
 	m_Pin_RightEyeLED(pin_RightEyeLED)
 {	
-	m_EyeServo_Horizontal.attach(pin_EyeServo_Hor);
-	m_EyeServo_Vertical.attach(pin_EyeServo_Ver);
+	m_pEyesServo_Horizontal->attach(pin_EyeServo_Hor);
+	m_pEyesServo_Vertical->attach(pin_EyeServo_Ver);
 	pinMode(m_Pin_LeftEyeLED, OUTPUT);
 	pinMode(m_Pin_RightEyeLED, OUTPUT);
+	m_pEyesServo_Horizontal = new ServoControl(EYES_MIN,EYES_MAX);
+	m_pEyesServo_Vertical = new ServoControl(EYES_MIN,EYES_MAX);
 	bothEyes(ON);
 }
 
@@ -41,12 +43,6 @@ void Eyes::rightEye(int state){
 }
 
 void Eyes::move(int pos_horizontal, int pos_vertical){
-	moveServo(
-		&m_EyeServo_Horizontal,
-		pos_horizontal,EYE_DELAY
-	);
-	moveServo(
-		&m_EyeServo_Vertical,
-		pos_vertical,EYE_DELAY
-	);
+	m_pEyesServo_Horizontal->moveServo(pos_horizontal,EYE_DELAY);
+	m_pEyesServo_Vertical->moveServo(pos_vertical,EYE_DELAY);
 }

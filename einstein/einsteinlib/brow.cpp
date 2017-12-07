@@ -3,16 +3,14 @@
 // Brow
 
 Brow::Brow(int pin_left, int pin_right){
-	m_RightBrow.attach(pin_right);
-	m_LeftBrow.attach(pin_left);
-//	moveServo(&m_RightBrow,SERVO_CENTER,BROW_DELAY);
-//	moveServo(&m_LeftBrow,SERVO_CENTER,BROW_DELAY);
+	m_pRightBrow->attach(pin_right);
+	m_pLeftBrow->attach(pin_left);
+	m_pRightBrow = new ServoControl(SERVO_MIN,SERVO_MAX);
+	m_pLeftBrow = new ServoControl(SERVO_MIN,SERVO_MAX);
 	move(SERVO_CENTER,SERVO_CENTER);
 }
 
 void Brow::move(int pos_left, int pos_right){
-	moveServo(&m_RightBrow,pos_right,BROW_DELAY);
-	moveServo(&m_LeftBrow,pos_left,BROW_DELAY);
-//	m_RightBrow.write(pos_right);
-//	m_LeftBrow.write(pos_left);
+	m_pRightBrow->moveServo(pos_right,BROW_DELAY);
+	m_pLeftBrow->moveServo(pos_left,BROW_DELAY);
 }

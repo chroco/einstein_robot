@@ -2,6 +2,10 @@
 #define HEAD_H
 
 #include "common.h"
+#include "servo_control.h"
+
+#define HEAD_TURN_MIN SERVO_MIN
+#define HEAD_TURN_MAX SERVO_MAX
 
 class Head{
 	public:
@@ -9,8 +13,8 @@ class Head{
 		void turn(int pos);
 		void tilt(int pos);
 	private:
-		Servo m_Turn;
-		Servo m_Tilt;
+		ServoControl *m_pTurn;
+		ServoControl *m_pTilt;
 };
 
 #endif

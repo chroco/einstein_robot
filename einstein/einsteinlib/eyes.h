@@ -2,6 +2,10 @@
 #define EYES_H
 
 #include "common.h"
+#include "servo_control.h"
+
+#define EYES_MIN SERVO_MIN
+#define EYES_MAX SERVO_MAX
 
 class Eyes{
 	public:
@@ -16,8 +20,8 @@ class Eyes{
 		void rightEye(int state);
 		void move(int pos_horizontal, int pos_vertical);
 	private:
-		Servo m_EyeServo_Horizontal;
-		Servo m_EyeServo_Vertical;
+		ServoControl *m_pEyesServo_Horizontal;
+		ServoControl *m_pEyesServo_Vertical;
 		int m_Pin_LeftEyeLED;
 		int m_Pin_RightEyeLED;
 };
