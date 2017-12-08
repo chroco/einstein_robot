@@ -11,12 +11,12 @@ Eyes::Eyes(
 	m_Pin_LeftEyeLED(pin_LeftEyeLED),
 	m_Pin_RightEyeLED(pin_RightEyeLED)
 {	
+	m_pEyesServo_Horizontal = new ServoControl(EYES_HORIZONTAL_MIN,EYES_HORIZONTAL_MAX);
+	m_pEyesServo_Vertical = new ServoControl(EYES_VERTICAL_MIN,EYES_VERTICAL_MAX);
 	m_pEyesServo_Horizontal->attach(pin_EyeServo_Hor);
 	m_pEyesServo_Vertical->attach(pin_EyeServo_Ver);
 	pinMode(m_Pin_LeftEyeLED, OUTPUT);
 	pinMode(m_Pin_RightEyeLED, OUTPUT);
-	m_pEyesServo_Horizontal = new ServoControl(EYES_MIN,EYES_MAX);
-	m_pEyesServo_Vertical = new ServoControl(EYES_MIN,EYES_MAX);
 	bothEyes(ON);
 }
 

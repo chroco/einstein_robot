@@ -13,6 +13,7 @@ class ServoControl{
 		unsigned int m_Min;
 		unsigned int m_Max;
 		bool validPosition(int pos);
+		unsigned int fixPosition(int pos);
 		Servo m_Servo;
 };
 

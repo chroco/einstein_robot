@@ -4,8 +4,11 @@
 #include "common.h"
 #include "servo_control.h"
 
-#define EYES_MIN SERVO_MIN
-#define EYES_MAX SERVO_MAX
+#define EYES_HORIZONTAL_MIN 0
+#define EYES_HORIZONTAL_MAX 150
+
+#define EYES_VERTICAL_MIN 0
+#define EYES_VERTICAL_MAX 150
 
 class Eyes{
 	public:

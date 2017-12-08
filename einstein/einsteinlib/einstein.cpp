@@ -10,10 +10,10 @@ Einstein::Einstein(){
 		PIN_ARM_RIGHT_ELBOW
 	);
 //*/
-	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
-	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
+//	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
+//	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
 	m_pHead = new Head(PIN_HEAD_TURN,PIN_HEAD_TILT);
-//*
+/*
 	m_pEyes = new Eyes(
 		PIN_EYES_HORIZONTAL,
 		PIN_EYES_VERTICAL,
@@ -22,6 +22,24 @@ Einstein::Einstein(){
 	);
 //*/
 //	m_pJoyride = new Joyride();
+}
+
+void Einstein::blink(int duration){
+	m_pEyes->bothEyes(OFF);
+	delay(duration);
+	m_pEyes->bothEyes(ON);
+}
+
+void Einstein::moveEyes(int pos_h,int pos_v){
+	m_pEyes->move(pos_h,pos_v);
+}
+
+void Einstein::raiseBrow(){
+	m_pBrow->move(0,180);
+}
+
+void Einstein::lowerBrow(){
+	m_pBrow->move(180,0);
 }
 
 void Einstein::moveRightArm(
@@ -58,14 +76,6 @@ void Einstein::speak(int duration){
 	// TODO: implement me
 }
 
-void Einstein::raiseBrow(){
-	m_pBrow->move(180,0);
-}
-
-void Einstein::lowerBrow(){
-	m_pBrow->move(135,45);
-}
-
 void Einstein::neutralBrow(){
 	m_pBrow->move(SERVO_CENTER,SERVO_CENTER);
 }
@@ -76,12 +86,6 @@ void Einstein::turnHead(int pos){
 
 void Einstein::tiltHead(int pos){
 	m_pHead->tilt(pos);
-}
-
-void Einstein::blink(int duration){
-	m_pEyes->bothEyes(OFF);
-	delay(duration);
-	m_pEyes->bothEyes(ON);
 }
 
 void Einstein::forward(){

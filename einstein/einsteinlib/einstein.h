@@ -12,15 +12,16 @@
 class Einstein{
 	public:
 		Einstein();
+		void blink(int duration);
+		void moveEyes(int pos_h,int pos_v);
+		void raiseBrow();
+		void lowerBrow();
 		void smile();
 		void frown();
 		void speak(int duration);
-		void raiseBrow();
-		void lowerBrow();
 		void neutralBrow();
 		void turnHead(int pos);
 		void tiltHead(int pos);
-		void blink(int duration);
 		void forward();
 		void reverse();
 		void stop();

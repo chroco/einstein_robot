@@ -4,12 +4,12 @@
 #include "common.h"
 #include "servo_control.h"
 
-#define SHOULDER_MIN	SERVO_MIN 
+#define SHOULDER_MIN	20
 #define SHOULDER_MAX	SERVO_MAX
-#define ROTATE_MIN		SERVO_MIN
-#define ROTATE_MAX		SERVO_MAX
-#define ELBOW_MIN			SERVO_MIN + 10
-#define ELBOW_MAX			SERVO_MAX - 10
+#define ROTATE_MIN		90
+#define ROTATE_MAX		125	
+#define ELBOW_MIN			10
+#define ELBOW_MAX			170
 
 class Arm{
 	public:

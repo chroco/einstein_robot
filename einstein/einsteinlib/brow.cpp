@@ -3,10 +3,10 @@
 // Brow
 
 Brow::Brow(int pin_left, int pin_right){
-	m_pRightBrow->attach(pin_right);
-	m_pLeftBrow->attach(pin_left);
 	m_pRightBrow = new ServoControl(SERVO_MIN,SERVO_MAX);
 	m_pLeftBrow = new ServoControl(SERVO_MIN,SERVO_MAX);
+	m_pRightBrow->attach(pin_right);
+	m_pLeftBrow->attach(pin_left);
 	move(SERVO_CENTER,SERVO_CENTER);
 }
 
