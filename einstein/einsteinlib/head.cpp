@@ -2,7 +2,7 @@
 
 Head::Head(int pin_turn, int pin_tilt){
 	m_pTurn = new ServoControl(HEAD_TURN_MIN,HEAD_TURN_MAX);
-	m_pTilt = new ServoControl(HEAD_TURN_MIN,HEAD_TURN_MAX);
+	m_pTilt = new ServoControl(HEAD_TILT_MIN,HEAD_TILT_MAX);
 	m_pTurn->attach(pin_turn);
 	m_pTilt->attach(pin_tilt);
 	turn(SERVO_CENTER);

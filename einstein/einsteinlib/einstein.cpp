@@ -3,7 +3,7 @@
 // Einstein 
 
 Einstein::Einstein(){
-/*
+//*
 	m_pRightArm = new Arm(
 		PIN_ARM_RIGHT_SHOULDER,
 		PIN_ARM_RIGHT_ROTATE,
@@ -21,7 +21,7 @@ Einstein::Einstein(){
 		PIN_EYE_RIGHT
 	);
 //*/
-//	m_pJoyride = new Joyride();
+	m_pJoyride = new Joyride();
 }
 
 void Einstein::blink(int duration){

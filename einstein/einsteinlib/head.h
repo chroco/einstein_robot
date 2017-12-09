@@ -6,6 +6,9 @@
 
 #define HEAD_TURN_MIN SERVO_MIN
 #define HEAD_TURN_MAX SERVO_MAX
+#define HEAD_TILT_MIN SERVO_MIN
+#define HEAD_TILT_MAX SERVO_MAX
+
 
 class Head{
 	public:
