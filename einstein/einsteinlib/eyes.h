@@ -7,8 +7,8 @@
 #define EYES_HORIZONTAL_MIN 0
 #define EYES_HORIZONTAL_MAX 150
 
-#define EYES_VERTICAL_MIN 0
-#define EYES_VERTICAL_MAX 150
+#define EYES_VERTICAL_MIN 45
+#define EYES_VERTICAL_MAX 125
 
 class Eyes{
 	public:

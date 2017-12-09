@@ -16,7 +16,9 @@ unsigned int ServoControl::fixPosition(int pos){
 
 void ServoControl::moveServo(int pos, int delay_ms){
 	int temp_pos = m_Servo.read();
-//	if (!validPosition(pos) || temp_pos == pos){
+	if (temp_pos == pos){
+		return;
+	}
 	if (!validPosition(pos)){
 		pos=fixPosition(pos);
 	}
@@ -26,7 +28,7 @@ void ServoControl::moveServo(int pos, int delay_ms){
 			delay(delay_ms);
 		}
 	}else{
-		for(;temp_pos > pos;--temp_pos){
+		for(;temp_pos >= pos;--temp_pos){
 			m_Servo.write(temp_pos);
 			delay(delay_ms);
 		}

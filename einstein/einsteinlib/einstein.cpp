@@ -3,17 +3,17 @@
 // Einstein 
 
 Einstein::Einstein(){
-//*
+/*
 	m_pRightArm = new Arm(
 		PIN_ARM_RIGHT_SHOULDER,
 		PIN_ARM_RIGHT_ROTATE,
 		PIN_ARM_RIGHT_ELBOW
 	);
 //*/
-//	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
-//	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
+	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
+	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
 	m_pHead = new Head(PIN_HEAD_TURN,PIN_HEAD_TILT);
-/*
+//*
 	m_pEyes = new Eyes(
 		PIN_EYES_HORIZONTAL,
 		PIN_EYES_VERTICAL,
@@ -73,7 +73,7 @@ void Einstein::frown(){
 }
 
 void Einstein::speak(int duration){
-	// TODO: implement me
+	m_pMouth->move(180,0);
 }
 
 void Einstein::neutralBrow(){

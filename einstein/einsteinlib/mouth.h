@@ -4,8 +4,8 @@
 #include "common.h"
 #include "servo_control.h"
 
-#define MOUTH_MIN SERVO_MIN
-#define MOUTH_MAX SERVO_MAX
+#define MOUTH_MIN	75 
+#define MOUTH_MAX 105
 
 class Mouth{
 	public:
