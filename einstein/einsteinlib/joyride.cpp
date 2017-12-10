@@ -3,9 +3,9 @@
 /*-------------------------------------------------------------
 Function: DCMotor (Constructor)
 Inputs:
-	int enable:
-	int front:
-	int rear:
+	int enable: pin to set the velocity of the motor with PWM
+	int front: pin to enable forward movement
+	int rear: pin to enable reverse movement
 Ouput: 	None
 Description: Constructor function for the DCMotor class
 --------------------------------------------------------------*/
