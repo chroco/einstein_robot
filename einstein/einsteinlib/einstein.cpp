@@ -3,7 +3,7 @@
 // Einstein 
 
 /*------------------------------------------------------
-Function: Enstein (Constructor)
+Function: Einstein (Constructor)
 Inputs: None
 Output: None
 Description: Constructor function for the Einstein class
