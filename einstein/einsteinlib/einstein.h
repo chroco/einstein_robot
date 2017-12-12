@@ -9,6 +9,7 @@
 #include "joyride.h"
 #include "eyes.h"
 
+//Einstein class which uses instances of other classes
 class Einstein{
 	public:
 		Einstein();
