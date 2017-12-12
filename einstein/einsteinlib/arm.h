@@ -11,6 +11,7 @@
 #define ELBOW_MIN			10
 #define ELBOW_MAX			170
 
+//Arm class to control the shoulder and elbow movement
 class Arm{
 	public:
 		Arm(
