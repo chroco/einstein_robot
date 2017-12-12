@@ -1,240 +1,28 @@
 #include <einstein.h>
 
-bool validPosition(int pos){
-	return (pos >= SERVO_MIN && pos <= SERVO_MAX);
-}
-
-void moveServo(Servo *servo,int pos, int delay_ms){
-	int temp_pos = servo->read();
-	if (!validPosition(pos) || temp_pos == pos){
-		return;
-	}else if(temp_pos < pos){
-		for(;temp_pos <= pos;++temp_pos){
-			servo->write(temp_pos);
-			delay(delay_ms);
-		}
-	}else{
-		for(;temp_pos >= pos;--temp_pos){
-			servo->write(temp_pos);
-			delay(delay_ms);
-		}
-	}
-}
-
-DCMotor::DCMotor(int enable,int front,int rear)
-	:m_Enable(enable),m_Front(front),m_Rear(rear)
-{
-	pinMode(m_Enable,OUTPUT);
-	pinMode(m_Front,OUTPUT);
-	pinMode(m_Rear,OUTPUT);
-	analogWrite(m_Enable,MOTOR_SPEED);
-}
-
-void DCMotor::forward(){
-	digitalWrite(m_Front,LOW);
-	digitalWrite(m_Rear,HIGH);
-}
-
-void DCMotor::reverse(){
-	digitalWrite(m_Front,HIGH);
-	digitalWrite(m_Rear,LOW);
-}
-
-void DCMotor::stop(){
-	digitalWrite(m_Front,LOW);
-	digitalWrite(m_Rear,LOW);
-}
-
-Joyride::Joyride(){
-	m_pRightMotor = new DCMotor(
-		PIN_MOTOR_ENABLE_RIGHT,
-		PIN_MOTOR_FRONT_RIGHT,
-		PIN_MOTOR_REAR_RIGHT
-	);
-	m_pLeftMotor = new DCMotor(
-		PIN_MOTOR_ENABLE_LEFT,
-		PIN_MOTOR_FRONT_LEFT,
-		PIN_MOTOR_REAR_LEFT
-	);
-}
-
-void Joyride::forward(){
-	m_pRightMotor->forward();
-	m_pLeftMotor->forward();
-}
-
-void Joyride::reverse(){
-	m_pRightMotor->reverse();
-	m_pLeftMotor->reverse();
-}
-
-void Joyride::stop(){
-	m_pRightMotor->stop();
-	m_pLeftMotor->stop();
-}
-
-void turnRight(int value){
-	// TODO: implement me
-}
-
-void turnLeft(int value){
-	// TODO: implement me
-}
-
-// Arm
-
-Arm::Arm(
-	int pin_shoulder,
-	int pin_rotate,
-	int pin_elbow
-){
-	m_Shoulder.attach(pin_shoulder);
-	m_Rotate.attach(pin_rotate);
-	m_Elbow.attach(pin_elbow);
-	move(SERVO_CENTER,SERVO_CENTER,SERVO_CENTER);
-}
-
-void Arm::levelArm(int pos){
-	moveServo(&m_Shoulder,pos,SHOULDER_DELAY);
-	//	m_Shoulder.write(pos);
-}
-
-void Arm::rotate(int pos){
-	moveServo(&m_Rotate,pos,ROTATE_DELAY);
-		//m_Rotate.write(pos);
-}
-
-void Arm::bend(int pos){
-	moveServo(&m_Elbow,pos,BEND_DELAY);
-		//m_Elbow.write(pos);
-}
-
-void Arm::move(
-	int pos_shoulder,
-	int pos_rotate,
-	int pos_elbow
-){
-	levelArm(pos_shoulder);
-	rotate(pos_rotate);
-	bend(pos_elbow);
-}
-
-// Mouth
-
-Mouth::Mouth(int pin_left, int pin_right){
-	m_RightJaw.attach(pin_right);
-	m_LeftJaw.attach(pin_left);
-	move(SERVO_CENTER,SERVO_CENTER);
-}
-
-void Mouth::move(int pos_left, int pos_right){
-	moveServo(&m_RightJaw,pos_right,MOUTH_DELAY);
-	moveServo(&m_LeftJaw,pos_left,MOUTH_DELAY);
-	//m_RightJaw.write(left);
-	//m_LeftJaw.write(right);
-}
-
-// Brow
-
-Brow::Brow(int pin_left, int pin_right){
-	m_RightBrow.attach(pin_right);
-	m_LeftBrow.attach(pin_left);
-//	moveServo(&m_RightBrow,SERVO_CENTER,BROW_DELAY);
-//	moveServo(&m_LeftBrow,SERVO_CENTER,BROW_DELAY);
-	move(SERVO_CENTER,SERVO_CENTER);
-}
-
-void Brow::move(int pos_left, int pos_right){
-	moveServo(&m_RightBrow,pos_right,BROW_DELAY);
-	moveServo(&m_LeftBrow,pos_left,BROW_DELAY);
-//	m_RightBrow.write(pos_right);
-//	m_LeftBrow.write(pos_left);
-}
-
-// Eyes
-
-Eyes::Eyes(
-	int pin_EyeServo_Hor,
-	int pin_EyeServo_Ver,
-	int pin_LeftEyeLED, 
-	int pin_RightEyeLED
-	):
-	m_Pin_LeftEyeLED(pin_LeftEyeLED),
-	m_Pin_RightEyeLED(pin_RightEyeLED)
-{	
-	m_EyeServo_Horizontal.attach(pin_EyeServo_Hor);
-	m_EyeServo_Vertical.attach(pin_EyeServo_Ver);
-	pinMode(m_Pin_LeftEyeLED, OUTPUT);
-	pinMode(m_Pin_RightEyeLED, OUTPUT);
-	bothEyes(ON);
-}
-
-void Eyes::bothEyes(int state){
-	if (state==ON) state = HIGH;
-	else if (state==OFF) state = LOW;
-	else return;
-  digitalWrite(m_Pin_LeftEyeLED,state);
-  digitalWrite(m_Pin_RightEyeLED,state);
-}
-
-void Eyes::leftEye(int state){
-	if (state==ON) state = HIGH;
-	else if (state==OFF) state = LOW;
-	else return;
-  digitalWrite(m_Pin_LeftEyeLED,state);
-}
-
-void Eyes::rightEye(int state){
-	if (state==ON) state = HIGH;
-	else if (state=OFF) state = LOW;
-	else return;
-  digitalWrite(m_Pin_RightEyeLED,state);
-}
-
-void Eyes::move(int pos_horizontal, int pos_vertical){
-	moveServo(
-		&m_EyeServo_Horizontal,
-		pos_horizontal,EYE_DELAY
-	);
-	moveServo(
-		&m_EyeServo_Vertical,
-		pos_vertical,EYE_DELAY
-	);
-}
-
-// Head
-
-Head::Head(int pin_turn, int pin_tilt){
-	m_Turn.attach(pin_turn);
-	m_Tilt.attach(pin_tilt);
-	turn(SERVO_CENTER);
-	tilt(SERVO_CENTER);
-}
-
-void Head::turn(int pos){
-	moveServo(&m_Turn,pos,TURN_DELAY);
-	//m_Turn.write(pos);
-}
-
-void Head::tilt(int pos){
-	moveServo(&m_Tilt,pos,TILT_DELAY);
-	//	m_Tilt.write(pos);
-}
-
 // Einstein 
 
+/*------------------------------------------------------
+Function: Einstein (Constructor)
+Inputs: None
+Output: None
+Description: Constructor function for the Einstein class
+------------------------------------------------------*/
 Einstein::Einstein(){
 //*
+	//Create a new instance of Einstein's arm
 	m_pRightArm = new Arm(
 		PIN_ARM_RIGHT_SHOULDER,
 		PIN_ARM_RIGHT_ROTATE,
 		PIN_ARM_RIGHT_ELBOW
 	);
 //*/
-//	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
-//	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
-//	m_pHead = new Head(PIN_HEAD_TURN,PIN_HEAD_TILT);
-/*
+	//Create a new instance of Einstein's mouth, brow, and head
+	m_pMouth = new Mouth(PIN_JAW_LEFT,PIN_JAW_RIGHT);
+	m_pBrow = new Brow(PIN_BROW_LEFT,PIN_BROW_RIGHT);
+	m_pHead = new Head(PIN_HEAD_TURN,PIN_HEAD_TILT);
+//*
+	//Create a new instance of Einstein's eyes
 	m_pEyes = new Eyes(
 		PIN_EYES_HORIZONTAL,
 		PIN_EYES_VERTICAL,
@@ -242,77 +30,221 @@ Einstein::Einstein(){
 		PIN_EYE_RIGHT
 	);
 //*/
-//	m_pJoyride = new Joyride();
+	//Create a new instance of Joyride to control base movement
+	m_pJoyride = new Joyride();
 }
 
+/*------------------------------------------------------
+Function: blink
+Inputs:
+	int duration: duration that the eye LEDs stay off
+Output: None (void)
+Description: Blinks Einstein's eyes by turning off then on
+the LEDs in the eyes
+------------------------------------------------------*/
+void Einstein::blink(int duration){
+	//Turn off both eye LED's and delay for a given time
+	m_pEyes->bothEyes(OFF);
+	delay(duration);
+	
+	//Turn on both eye LED's
+	m_pEyes->bothEyes(ON);
+}
+
+/*------------------------------------------------------
+Function: moveEyes
+Inputs:
+	int pos_h: horizontal position to move the eyes to
+	int pos_v: vertical position to move the eyes to
+Output:	None (void)
+Description: Moves both of Einstein's eyes to a given
+vertical and horizontal location
+------------------------------------------------------*/
+void Einstein::moveEyes(int pos_h,int pos_v){
+	//Move the eyes to a given vertical and horizontal location
+	m_pEyes->move(pos_h,pos_v);
+}
+
+/*------------------------------------------------------
+Function: raiseBrow
+Inputs: None
+Output: None (void)
+Description: Raises both of Einstein's eye brows
+------------------------------------------------------*/
+void Einstein::raiseBrow(){
+	//Raise both of Einstein's eye brows
+	m_pBrow->move(0,180);
+}
+
+/*------------------------------------------------------
+Function: lowerBrow
+Inputs: None
+Output: None (void)
+Description: Lowers both of Einstein's eye brows
+------------------------------------------------------*/
+void Einstein::lowerBrow(){
+	//Lowers both of Einstein's eyes brows
+	m_pBrow->move(180,0);
+}
+
+/*------------------------------------------------------
+Function: moveRightArm
+Inputs:
+	int pos_shoulder: position to rotate the shoulder to
+	int pos_rotate: position to rotate the arm to
+	int pos_elbow: position to bend the elbow to
+Output: None (void)
+Description: Moves Einstein's arm to a given position
+------------------------------------------------------*/
 void Einstein::moveRightArm(
 	int pos_shoulder,
 	int pos_rotate,
 	int pos_elbow
 ){
-	m_pRightArm->levelArm(pos_shoulder);
+	//Moves the shoulder to a given location
+	m_pRightArm->pitch(pos_shoulder);
+	
+	//Rotates the arm to a given location
 	m_pRightArm->rotate(pos_rotate);
+	
+	//Moves the elbow to a given location
 	m_pRightArm->bend(pos_elbow);
 }
 
-void Einstein::rotateArm(int pos){
+/*------------------------------------------------------
+Function: pitchRightArm
+Inputs:
+	int pos: position to rotate the shoulder to
+Output: None (void)
+Description: Rotates Einstein's shoulder to a given position
+------------------------------------------------------*/
+void Einstein::pitchRightArm(int pos){
+	//Rotate the shoulder to a given position
+	m_pRightArm->pitch(pos);
+}
+
+/*------------------------------------------------------
+Function: rotateRightArm
+Inputs:
+	int pos: position to rotate the arm to
+Output: None (void)
+Description: Rotates Einstein's arm to a given position
+------------------------------------------------------*/
+void Einstein::rotateRightArm(int pos){
+	//Rotate the arm to a given position
 	m_pRightArm->rotate(pos);
 }
 
-void Einstein::bendArm(int pos){
+/*------------------------------------------------------
+Function: bendRightArm
+Inputs:
+	int pos: position to move the elbow to
+Output: None (void)
+Description: Move Einstein's elbow to a given postion
+------------------------------------------------------*/
+void Einstein::bendRightArm(int pos){
+	//Move the elbow to a given position
 	m_pRightArm->bend(pos);
 }
 
-void Einstein::levelArm(int pos){
-	m_pRightArm->levelArm(pos);
-}
-
+/*------------------------------------------------------
+Function: smile
+Inputs: None
+Output: None (void)
+Description: Moves Einstein's mouth to the smiling position
+------------------------------------------------------*/
 void Einstein::smile(){
+	//Moves the mouth to a smiling position
 	m_pMouth->move(0,180);
 }
 
+/*------------------------------------------------------
+Function: frown
+Inputs: None
+Output: None (void)
+Description: Moves Einstein's mouth to the frowning position
+------------------------------------------------------*/
 void Einstein::frown(){
+	//Moves the mouth to a frowning position
 	m_pMouth->move(180,0);
 }
 
+/*------------------------------------------------------
+Function: speak
+Inputs: None
+Output: None (void)
+Description: Moves Einstein's mouth to the speaking position
+------------------------------------------------------*/
 void Einstein::speak(int duration){
-	// TODO: implement me
+	//Moves the mouth into the speaking position
+	m_pMouth->move(180,0);
 }
 
-void Einstein::raiseBrow(){
-	m_pBrow->move(180,0);
-}
-
-void Einstein::lowerBrow(){
-	m_pBrow->move(135,45);
-}
-
+/*------------------------------------------------------
+Function: neutralBrow
+Inputs: None
+Output: None (void)
+Description: Places Einstein's eye brows in their relaxed 
+positon (neutral)
+------------------------------------------------------*/
 void Einstein::neutralBrow(){
+	//Centers the eye brows 
 	m_pBrow->move(SERVO_CENTER,SERVO_CENTER);
 }
 
+/*------------------------------------------------------
+Function: turnHead
+Inputs:
+	int pos: position to turn the head to
+Output: None (void)
+Description: Turns Einstein's head to a given position
+------------------------------------------------------*/
 void Einstein::turnHead(int pos){
+	//Turns the head to a given position
 	m_pHead->turn(pos);
 }
 
+/*------------------------------------------------------
+Function: tiltHead
+Inputs:
+	int pos: position to tilt the head to
+Output: None (void)
+Description: Tilts Einstein's head to a given position
+------------------------------------------------------*/
 void Einstein::tiltHead(int pos){
+	//Tilts Einstein's head to a given position
 	m_pHead->tilt(pos);
 }
 
-void Einstein::blink(int duration){
-	m_pEyes->bothEyes(OFF);
-	delay(duration);
-	m_pEyes->bothEyes(ON);
-}
-
+/*------------------------------------------------------
+Function: forward
+Inputs: None
+Output: None (void)
+Description: Moves Einstein's base forward
+------------------------------------------------------*/
 void Einstein::forward(){
+	//Moves Einstein forward
 	m_pJoyride->forward();
 }
 
+/*------------------------------------------------------
+Function: reverse
+Inputs: None
+Output: None (void)
+Description: Moves Einstein's base in reverse
+------------------------------------------------------*/
 void Einstein::reverse(){
+	//Moves Einstein backwards
 	m_pJoyride->reverse();
 }
 
+/*------------------------------------------------------
+Function: stop
+Inputs: None
+Output: None (void)
+Description: Stops Einstein's base from moving
+------------------------------------------------------*/
 void Einstein::stop(){
+	//Stop Einstein's base movement
 	m_pJoyride->stop();
 }
